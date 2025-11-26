@@ -1,0 +1,58 @@
+[
+    {
+        "id": 1,
+        "name": "Camiseta Premium",
+        "description": "Camiseta de algodão premium com corte moderno e confortável",
+        "price": 89.90,
+        "image": "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=400&h=400&fit=crop"
+    },
+    {
+        "id": 2,
+        "name": "Tênis Esportivo",
+        "description": "Tênis leve e confortável, ideal para corridas e atividades diárias",
+        "price": 299.90,
+        "image": "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400&h=400&fit=crop"
+    },
+    {
+        "id": 3,
+        "name": "Relógio Elegante",
+        "description": "Relógio analógico minimalista com pulseira de couro legítimo",
+        "price": 459.90,
+        "image": "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=400&h=400&fit=crop"
+    },
+    {
+        "id": 4,
+        "name": "Mochila Urbana",
+        "description": "Mochila resistente à água com compartimentos para notebook",
+        "price": 189.90,
+        "image": "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=400&h=400&fit=crop"
+    },
+    {
+        "id": 5,
+        "name": "Fone Bluetooth",
+        "description": "Fone sem fio com cancelamento de ruído e bateria de longa duração",
+        "price": 349.90,
+        "image": "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400&h=400&fit=crop"
+    },
+    {
+        "id": 6,
+        "name": "Óculos de Sol",
+        "description": "Óculos de sol com proteção UV400 e design atemporal",
+        "price": 159.90,
+        "image": "https://images.unsplash.com/photo-1572635196237-14b3f281503f?w=400&h=400&fit=crop"
+    },
+    {
+        "id": 7,
+        "name": "Carteira de Couro",
+        "description": "Carteira slim de couro legítimo com porta-cartões",
+        "price": 129.90,
+        "image": "https://images.unsplash.com/photo-1627123424574-724758594e93?w=400&h=400&fit=crop"
+    },
+    {
+        "id": 8,
+        "name": "Garrafa Térmica",
+        "description": "Garrafa térmica de 500ml que mantém bebidas geladas por 24h",
+        "price": 79.90,
+        "image": "https://images.unsplash.com/photo-1602143407151-7111542de6e8?w=400&h=400&fit=crop"
+    }
+]
