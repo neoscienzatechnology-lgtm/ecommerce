@@ -4,9 +4,12 @@
  */
 
 // ==========================================
-// Cart State
+// Application State (namespaced)
 // ==========================================
-let cart = [];
+const ModernShop = {
+    cart: [],
+    products: []
+};
 
 // ==========================================
 // DOM Elements
@@ -65,6 +68,29 @@ function setupEventListeners() {
             closeCart();
         }
     });
+    
+    // Event delegation for product grid (add to cart buttons)
+    productsGrid.addEventListener('click', (e) => {
+        const addBtn = e.target.closest('.add-to-cart-btn');
+        if (addBtn) {
+            const productId = parseInt(addBtn.dataset.productId, 10);
+            addToCart(productId);
+        }
+    });
+    
+    // Event delegation for cart items (quantity and remove buttons)
+    cartItems.addEventListener('click', (e) => {
+        const target = e.target;
+        const productId = parseInt(target.dataset.productId, 10);
+        
+        if (target.classList.contains('quantity-btn-decrease')) {
+            updateQuantity(productId, -1);
+        } else if (target.classList.contains('quantity-btn-increase')) {
+            updateQuantity(productId, 1);
+        } else if (target.classList.contains('remove-item-btn')) {
+            removeFromCart(productId);
+        }
+    });
 }
 
 // ==========================================
@@ -99,7 +125,7 @@ function renderProducts(products) {
                 <p class="product-description">${product.description}</p>
                 <div class="product-footer">
                     <span class="product-price">${formatPrice(product.price)}</span>
-                    <button class="add-to-cart-btn" onclick="addToCart(${product.id})">
+                    <button class="add-to-cart-btn" data-product-id="${product.id}">
                         Adicionar
                     </button>
                 </div>
@@ -107,23 +133,23 @@ function renderProducts(products) {
         </article>
     `).join('');
     
-    // Store products globally for cart operations
-    window.products = products;
+    // Store products in namespaced object
+    ModernShop.products = products;
 }
 
 // ==========================================
 // Cart Operations
 // ==========================================
 function addToCart(productId) {
-    const product = window.products.find(p => p.id === productId);
+    const product = ModernShop.products.find(p => p.id === productId);
     if (!product) return;
     
-    const existingItem = cart.find(item => item.id === productId);
+    const existingItem = ModernShop.cart.find(item => item.id === productId);
     
     if (existingItem) {
         existingItem.quantity += 1;
     } else {
-        cart.push({
+        ModernShop.cart.push({
             id: product.id,
             name: product.name,
             price: product.price,
@@ -137,12 +163,12 @@ function addToCart(productId) {
 }
 
 function removeFromCart(productId) {
-    cart = cart.filter(item => item.id !== productId);
+    ModernShop.cart = ModernShop.cart.filter(item => item.id !== productId);
     updateCart();
 }
 
 function updateQuantity(productId, change) {
-    const item = cart.find(item => item.id === productId);
+    const item = ModernShop.cart.find(item => item.id === productId);
     if (!item) return;
     
     item.quantity += change;
@@ -162,7 +188,7 @@ function updateCart() {
 }
 
 function renderCart() {
-    if (cart.length === 0) {
+    if (ModernShop.cart.length === 0) {
         cartItems.style.display = 'none';
         cartEmpty.classList.add('active');
         cartFooter.style.display = 'none';
@@ -171,7 +197,7 @@ function renderCart() {
         cartEmpty.classList.remove('active');
         cartFooter.style.display = 'block';
         
-        cartItems.innerHTML = cart.map(item => `
+        cartItems.innerHTML = ModernShop.cart.map(item => `
             <div class="cart-item">
                 <div class="cart-item-image">
                     <img src="${item.image}" alt="${item.name}">
@@ -183,11 +209,11 @@ function renderCart() {
                     </div>
                     <div class="cart-item-actions">
                         <div class="quantity-controls">
-                            <button class="quantity-btn" onclick="updateQuantity(${item.id}, -1)" aria-label="Diminuir quantidade">−</button>
+                            <button class="quantity-btn quantity-btn-decrease" data-product-id="${item.id}" aria-label="Diminuir quantidade">−</button>
                             <span class="cart-item-quantity">${item.quantity}</span>
-                            <button class="quantity-btn" onclick="updateQuantity(${item.id}, 1)" aria-label="Aumentar quantidade">+</button>
+                            <button class="quantity-btn quantity-btn-increase" data-product-id="${item.id}" aria-label="Aumentar quantidade">+</button>
                         </div>
-                        <button class="remove-item-btn" onclick="removeFromCart(${item.id})">Remover</button>
+                        <button class="remove-item-btn" data-product-id="${item.id}">Remover</button>
                     </div>
                 </div>
             </div>
@@ -196,12 +222,12 @@ function renderCart() {
 }
 
 function updateCartCount() {
-    const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+    const totalItems = ModernShop.cart.reduce((sum, item) => sum + item.quantity, 0);
     cartCount.textContent = totalItems;
 }
 
 function updateCartTotal() {
-    const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+    const total = ModernShop.cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
     cartTotalValue.textContent = formatPrice(total);
 }
 
@@ -224,17 +250,15 @@ function closeCart() {
 // Checkout
 // ==========================================
 function handleCheckout() {
-    if (cart.length === 0) {
+    if (ModernShop.cart.length === 0) {
         showToast('Seu carrinho está vazio!');
         return;
     }
     
-    const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-    
     // In a real application, this would redirect to a checkout page
     // For this demo, we'll show a success message and clear the cart
     showToast('Pedido realizado com sucesso! Obrigado pela compra.');
-    cart = [];
+    ModernShop.cart = [];
     updateCart();
     closeCart();
 }
@@ -263,18 +287,18 @@ function showToast(message) {
 // Local Storage
 // ==========================================
 function saveCartToStorage() {
-    localStorage.setItem('modernshop-cart', JSON.stringify(cart));
+    localStorage.setItem('modernshop-cart', JSON.stringify(ModernShop.cart));
 }
 
 function loadCartFromStorage() {
     const savedCart = localStorage.getItem('modernshop-cart');
     if (savedCart) {
         try {
-            cart = JSON.parse(savedCart);
+            ModernShop.cart = JSON.parse(savedCart);
             updateCart();
         } catch (error) {
             console.error('Error loading cart from storage:', error);
-            cart = [];
+            ModernShop.cart = [];
         }
     }
 }
