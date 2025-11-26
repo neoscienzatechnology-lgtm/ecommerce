@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="400" height="400" viewBox="0 0 400 400">
+    <defs>
+        <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:#f8f9fa"/>
+            <stop offset="100%" style="stop-color:#e5e7eb"/>
+        </linearGradient>
+        <linearGradient id="bottle" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" style="stop-color:#374151"/>
+            <stop offset="50%" style="stop-color:#4b5563"/>
+            <stop offset="100%" style="stop-color:#374151"/>
+        </linearGradient>
+    </defs>
+    <rect width="400" height="400" fill="url(#bg)"/>
+    <!-- Bottle cap -->
+    <rect x="175" y="80" width="50" height="30" rx="5" fill="#1f2937"/>
+    <rect x="180" y="75" width="40" height="10" rx="3" fill="#111827"/>
+    <!-- Bottle body -->
+    <path d="M175 110 L175 100 Q175 90 185 90 L215 90 Q225 90 225 100 L225 110 L240 130 L240 300 Q240 320 220 320 L180 320 Q160 320 160 300 L160 130 Z" fill="url(#bottle)"/>
+    <!-- Bottle highlight -->
+    <rect x="170" y="140" width="10" height="150" rx="3" fill="white" opacity="0.1"/>
+    <!-- Label area -->
+    <rect x="165" y="180" width="70" height="60" rx="3" fill="#6b7280"/>
+    <text x="200" y="215" text-anchor="middle" font-family="Inter, sans-serif" font-size="10" fill="white" font-weight="600">500ml</text>
+    <text x="200" y="360" text-anchor="middle" font-family="Inter, sans-serif" font-size="14" fill="#666">Garrafa Térmica</text>
+</svg>
